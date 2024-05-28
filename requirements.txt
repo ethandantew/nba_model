@@ -1,0 +1,9 @@
+beautifulsoup4==4.10.0
+matplotlib==3.5.1
+nba-api==1.1.9
+numpy==1.22.2
+pandas==1.4.0
+requests==2.26.0
+scipy==1.8.0
+sklearn==0.24.2
+xgboost==1.5.1
