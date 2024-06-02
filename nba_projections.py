@@ -419,7 +419,7 @@ def get_player_data(cur_date):
         }
     )
 
-    current_player_passing_stats = pd.read_csv("./Outputs/player_passing_stats.csv")
+    current_player_passing_stats = pd.read_csv("player_passing_stats.csv")
     current_player_passing_stats["GAME_DATE"] = pd.to_datetime(
         current_player_passing_stats["GAME_DATE"]
     )
