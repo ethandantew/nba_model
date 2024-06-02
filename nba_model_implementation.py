@@ -9,9 +9,11 @@ import matplotlib.pyplot as plt
 import nba_projections_import
 import numpy as np
 
+# either use current date or select a date with format 'YYYY-MM-DD'
+current_date = dt.datetime.now().strftime("%Y-%m-%d")
 # get columns to be used in the model
-raw_model_data = nba_projections.get_model_data('01-01-2024')
-raw_model_data.to_csv("./Outputs/raw_model_data.csv", index=False)
+raw_model_data = nba_projections.get_model_data(current_date)
+# raw_model_data.to_csv("./Outputs/raw_model_data.csv", index=False)
 
 clean_model_data = raw_model_data.dropna()
 
@@ -201,6 +203,8 @@ print(
     f"Coverage Probability for Upper Quantile ({upper_quantile}): {coverage_upper:.2%}"
 )
 
+# Calculate the RMSE, R2, and MAE to measure model performance
+
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
@@ -226,7 +230,7 @@ print(f"MAE: {mae:.2f}")
 #     prob = 1 - norm(mean, std).cdf(threshold)
 #     probabilities.append(prob)
 
-
+# now let's actually use the model to predict the probability of a player scoring more than a certain threshold
 def predict_and_get_probabilities(player_name, vs_team, threshold):
     # Filter the player and opponent team from the latest data
     player_data = raw_model_data[
@@ -268,5 +272,5 @@ threshold = 7.5  # Replace with the desired threshold for points
 result = predict_and_get_probabilities(player_name, vs_team, threshold)
 print(result)
 
-imported_projections = nba_projections_import.sportsLine()
-team_lines = nba_projections_import.getLines()
+# imported_projections = nba_projections_import.sportsLine()
+# team_lines = nba_projections_import.getLines()
