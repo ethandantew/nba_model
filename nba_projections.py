@@ -10,8 +10,9 @@ from nba_api.stats.endpoints import (
 )
 import requests
 from datetime import datetime
+import time
 
-cur_season = "2023-24"
+cur_season = "2024-25"
 
 # set up historical dataframes
 
@@ -31,6 +32,7 @@ def get_rosters(cur_season):
                 team_id=id, season=cur_season
             ).get_data_frames()[0]
             all_rosters.append(team_roster)
+            time.sleep(1)
         except:
             pass
     roster_df = pd.concat(all_rosters)
@@ -276,7 +278,7 @@ def get_passing_stats(season, game_date):
 # player_passing_stats_df = player_passing_stats_df.sort_values(['PLAYER_ID', 'GAME_DATE'])
 # player_passing_stats_df['POTENTIAL_AST_L5'] = player_passing_stats_df.groupby('PLAYER_ID')['POTENTIAL_AST'].transform(lambda x: x.shift().rolling(5, min_periods = 5).mean())
 # player_passing_stats_df['PLAYER_ID'] = player_passing_stats_df['PLAYER_ID'].astype(str)
-# player_passing_stats_df.to_csv('./Outputs/player_passing_stats.csv', index=False)
+# player_passing_stats_df.to_csv('player_passing_stats.csv', index=False)
 
 
 def get_player_data(cur_date):
@@ -442,7 +444,7 @@ def get_player_data(cur_date):
     player_passing_stats_df["PLAYER_ID"] = player_passing_stats_df["PLAYER_ID"].astype(
         str
     )
-    player_passing_stats_df.to_csv("./Outputs/player_passing_stats.csv", index=False)
+    player_passing_stats_df.to_csv("player_passing_stats.csv", index=False)
     merged_games_df["GAME_DATE"] = pd.to_datetime(merged_games_df["GAME_DATE"])
     merged_player_data = pd.merge(
         merged_games_df,
@@ -830,7 +832,7 @@ def get_player_data(cur_date):
 # #PLAYER_ID got switched to integer, switching it back to a string for merge purposes.
 # # player_games_cleaned = game_logs.reset_index()
 # player_games_cleaned['PLAYER_ID'] = player_games_cleaned['PLAYER_ID'].astype(str)
-
+cur_date = '2024-11-03'
 
 def get_model_data(cur_date):
 
